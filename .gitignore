@@ -1,0 +1,5 @@
+.env
+node_modules/
+*-backup*.js
+*-before*.js
+package-before-online-fix.json
