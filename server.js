@@ -12,14 +12,14 @@ app.use(express.json());
 
 
 const personality = fs.readFileSync(
-"../ai/parmis-personality.txt",
+"./parmis-personality.txt",
 "utf8"
 );
 
 
 const products = JSON.parse(
 fs.readFileSync(
-"../ai/products-ai.json",
+"./products-ai.json",
 "utf8"
 )
 );
@@ -28,7 +28,6 @@ fs.readFileSync(
 const groq = new Groq({
 apiKey: process.env.GROQ_API_KEY
 });
-
 
 
 app.get("/", (req,res)=>{
@@ -40,11 +39,9 @@ status:"Parmis AI Server is running"
 });
 
 
-
 app.post("/chat", async(req,res)=>{
 
 try{
-
 
 const message = req.body.message;
 
@@ -82,17 +79,13 @@ content:message
 });
 
 
-
 let answer = completion.choices[0].message.content;
 
 
-
-// حذف حروف غیر فارسی و زبان‌های دیگر
 let cleanAnswer = answer
 .replace(/[A-Za-z]/g,"")
 .replace(/[^\u0600-\u06FF0-9\s.,!?🌸🙂😊\n]/g,"")
 .trim();
-
 
 
 res.json({
@@ -106,10 +99,8 @@ answer:cleanAnswer
 
 catch(error){
 
-
 console.log("GROQ ERROR:");
 console.log(error.message);
-
 
 
 res.json({
@@ -119,16 +110,14 @@ answer:
 
 });
 
-
 }
 
 
 });
 
 
-
-
 const PORT = process.env.PORT || 3000;
+
 
 app.listen(PORT,()=>{
 
